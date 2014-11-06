@@ -336,6 +336,7 @@ step3()
 	                                                                             --with-expat		\
 	                                                                             --with-macosx-version-min=10.7 \
 	                                                                             --enable-universal-binary="${UNIVERSAL_BINARY_STRING}" \
+                                                                                 --with-macosx-version-min=10.6 \
 	                                                                             $WXWIDGETS_ADDITIONAL_FLAGS || exit_on_build_error
 
 
@@ -401,7 +402,11 @@ step5()
 	                                         -DPYTHON_SITE_PACKAGE_PATH=$PREFIX_DIRECTORY/python/site-packages \
 	                                         -DPYTHON_PACKAGES_PATH=$PREFIX_DIRECTORY/python/site-packages     \
 	                                         -DCMAKE_OSX_ARCHITECTURES="${CMAKE_ARCHITECTURE_STRING}"          \
-	                                         -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+                                             -DCMAKE_VERBOSE_MAKEFILE=ON \
+                                             -DCMAKE_SHARED_LINKER_FLAGS="-Wl" \
+                                             -DCMAKE_MODULE_LINKER_FLAGS="-Wl" \
+	                                         -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+                                             -LA
 
 	#dependencies on swig .i files are not well managed, so if we clear this
 	#then swig rebuilds the .cxx files
